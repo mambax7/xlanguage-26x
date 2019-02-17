@@ -15,7 +15,6 @@
  * @author          Laurent JEN (Aka DuGris)
  * @version         $Id$
  */
-
 use Xoops\Core\PreloadItem;
 
 /**
@@ -33,8 +32,10 @@ class XlanguagePreload extends PreloadItem
      */
     public static function eventCoreIncludeCommonEnd($args)
     {
-        if (XoopsLoad::fileExists($hnd_file = dirname(__DIR__) . '/api.php')) {
-            include_once $hnd_file;
+        require_once __DIR__ . '/autoloader.php';
+
+        if (\XoopsLoad::fileExists($hnd_file = dirname(__DIR__) . '/api.php')) {
+            require_once $hnd_file;
         }
     }
 
@@ -43,7 +44,7 @@ class XlanguagePreload extends PreloadItem
      */
     public static function eventCoreHeaderCheckcache($args)
     {
-        $xoops = Xoops::getInstance();
+        $xoops = \Xoops::getInstance();
         xlanguage_select_show(explode('|', $xoops->registry()->get('XLANGUAGE_THEME_OPTIONS')));
     }
 }

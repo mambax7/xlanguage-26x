@@ -1,5 +1,5 @@
 <script type="text/javascript" src="<{xoImgUrl 'modules/xlanguage/media/jquery/jquery.language/jquery.language.js'}>"></script>
-<link rel="stylesheet" href="<{xoImgUrl 'modules/xlanguage/media/jquery/jquery.language/jquery.language.css'}>" type="text/css" media="screen" />
+<link rel="stylesheet" href="<{xoImgUrl 'modules/xlanguage/media/jquery/jquery.language/jquery.language.css'}>" type="text/css" media="screen">
 
 <style>
 <{foreach from=$block.languages name=lang_if item=lang}>

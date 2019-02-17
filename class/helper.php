@@ -1,4 +1,7 @@
 <?php
+
+namespace XoopsModules\Xlanguage;
+
 /*
  You may not change or alter any portion of this comment or credits
  of supporting developers from this source code or any supporting source code
@@ -17,8 +20,7 @@
  * @author          Laurent JEN (Aka DuGris)
  * @version         $Id$
  */
-
-class Xlanguage extends Xoops\Module\Helper\HelperAbstract
+class Helper extends \Xoops\Module\Helper\HelperAbstract
 {
     /**
      * Init the module
@@ -27,18 +29,18 @@ class Xlanguage extends Xoops\Module\Helper\HelperAbstract
      */
     public function init()
     {
-        if (XoopsLoad::fileExists($hnd_file = \XoopsBaseConfig::get('root-path') . '/modules/xlanguage/include/vars.php')) {
-            include_once $hnd_file;
+        if (\XoopsLoad::fileExists($hnd_file = \XoopsBaseConfig::get('root-path') . '/modules/xlanguage/include/vars.php')) {
+            require_once $hnd_file;
         }
 
-        if (XoopsLoad::fileExists($hnd_file = \XoopsBaseConfig::get('root-path') . '/modules/xlanguage/include/functions.php')) {
-            include_once $hnd_file;
+        if (\XoopsLoad::fileExists($hnd_file = \XoopsBaseConfig::get('root-path') . '/modules/xlanguage/include/functions.php')) {
+            require_once $hnd_file;
         }
         $this->setDirname('xlanguage');
     }
 
     /**
-     * @return Xlanguage
+     * @return \Xoops\Module\Helper\HelperAbstract
      */
     public static function getInstance()
     {
@@ -46,10 +48,28 @@ class Xlanguage extends Xoops\Module\Helper\HelperAbstract
     }
 
     /**
-     * @return XlanguageXlanguageHandler
+     * @return LanguageHandler
      */
     public function getHandlerLanguage()
     {
-        return $this->getHandler('xlanguage');
+        return $this->getHandler('Language');
+    }
+
+    /**
+     * Get an Object Handler
+     *
+     * @param string $name name of handler to load
+     *
+     * @return bool|\XoopsObjectHandler|\XoopsPersistableObjectHandler
+     */
+    public function getHandler($name)
+    {
+        $ret = false;
+        //        /** @var Connection $db */
+        $db = \XoopsDatabaseFactory::getConnection();
+        $class = '\\XoopsModules\\' . ucfirst(mb_strtolower(basename(dirname(__DIR__)))) . '\\' . $name . 'Handler';
+        $ret = new $class($db);
+
+        return $ret;
     }
 }

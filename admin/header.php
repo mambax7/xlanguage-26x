@@ -15,8 +15,7 @@
  * @author          Laurent JEN (Aka DuGris)
  * @version         $Id$
  */
-
-include_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
+require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
 
 $op = '';
 if (isset($_POST)) {
@@ -30,13 +29,13 @@ if (isset($_GET)) {
     }
 }
 
-XoopsLoad::load('system', 'system');
+\XoopsLoad::load('system', 'system');
 
-$xoops = Xoops::getInstance();
-$system = System::getInstance();
-$helper = Xlanguage::getInstance();
+$xoops = \Xoops::getInstance();
+$system = \System::getInstance();
+$helper = \XoopsModules\Xlanguage\Helper::getInstance();
 
-$helper->getHandlerLanguage()->loadConfig();
+$helper->getHandler('Language')->loadConfig();
 
 $xoops->header();
 $xoops->theme()->addStylesheet('modules/xlanguage/css/moduladmin.css');

@@ -16,10 +16,9 @@
  * @author          Laurent JEN (Aka DuGris)
  * @version         $Id$
  */
-
 include __DIR__ . '/header.php';
 
-$xoops = Xoops::getInstance();
+$xoops = \Xoops::getInstance();
 $xoops->header();
 $xoops->theme()->addStylesheet('modules/xcontact/css/moduladmin.css');
 

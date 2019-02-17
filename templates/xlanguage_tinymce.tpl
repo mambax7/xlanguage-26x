@@ -4,8 +4,8 @@
     <script type="text/javascript" src="../../utils/validate.js"></script>
     <script type="text/javascript" src="js/xoops_xlanguage.js"></script>
 
-    <link href="css/xoops_xlanguage.css" rel="stylesheet" type="text/css" />
-    <base target="_self" />
+    <link href="css/xoops_xlanguage.css" rel="stylesheet" type="text/css">
+    <base target="_self">
 </head>
 <body>
     <div class="tabs">
@@ -16,7 +16,7 @@
             <{/if}>
         </ul>
     </div>
-    <br />
+    <br>
 
     <div class="panel_wrapper">
         <div id="xlanguage_browser_panel" class="panel current" style="overflow:none;">

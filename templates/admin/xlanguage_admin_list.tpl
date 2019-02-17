@@ -18,7 +18,7 @@
             <td class="txtcenter"><{$language.xlanguage_description}></td>
             <td class="txtcenter"><{$language.xlanguage_charset}></td>
             <td class="txtcenter"><{$language.xlanguage_code}></td>
-            <td class="txtcenter"><img class="flag" src="<{$language.xlanguage_image}>" /></td>
+            <td class="txtcenter"><img class="flag" src="<{$language.xlanguage_image}>"></td>
             <td class="txtcenter"><{$language.xlanguage_weight}></td>
             <td class="txtcenter">
             <a href="index.php?op=edit&amp;xlanguage_id=<{$language.xlanguage_id}>"><img src="<{xoImgUrl 'media/xoops/images/icons/16/edit.png'}>" alt="<{translate key='A_EDIT'}>" title="<{translate key='A_EDIT'}>"></a>

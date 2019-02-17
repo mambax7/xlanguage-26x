@@ -16,7 +16,6 @@
  * @author          Laurent JEN (Aka DuGris)
  * @version         $Id$
  */
-
 $cpt = 0;
 $adminmenu[$cpt]['title'] = _MI_XLANGUAGE_INDEX;
 $adminmenu[$cpt]['link'] = 'admin/index.php';

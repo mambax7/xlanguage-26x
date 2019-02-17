@@ -14,6 +14,9 @@
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
  * @version         $Id$
+ * @param mixed $value
+ * @param mixed $out_charset
+ * @param mixed $in_charset
  */
 
 /**
@@ -32,6 +35,7 @@ function xlanguage_convert_encoding($value, $out_charset, $in_charset)
     } else {
         $value = xlanguage_convert_item($value, $out_charset, $in_charset);
     }
+
     return $value;
 }
 
@@ -44,15 +48,15 @@ function xlanguage_convert_encoding($value, $out_charset, $in_charset)
  */
 function xlanguage_convert_item($value, $out_charset, $in_charset)
 {
-    $xoops = Xoops::getInstance();
-    if (strtolower($in_charset) == strtolower($out_charset)) {
+    $xoops = \Xoops::getInstance();
+    if (mb_strtolower($in_charset) == mb_strtolower($out_charset)) {
         return $value;
     }
-    $xconv_handler = $xoops->getModuleHandler('xconv', 'xconv', true);
-    if (is_object($xconv_handler) && $converted_value = @$xconv_handler->convert_encoding($value, $out_charset, $in_charset)) {
+    $xconvHandler = $xoops->getModuleHandler('xconv', 'xconv', true);
+    if (is_object($xconvHandler) && $converted_value = @$xconvHandler->convert_encoding($value, $out_charset, $in_charset)) {
         return $converted_value;
     }
-    if (XoopsLocale::isMultiByte() && function_exists('mb_convert_encoding')) {
+    if (\XoopsLocale::isMultiByte() && function_exists('mb_convert_encoding')) {
         $converted_value = @mb_convert_encoding($value, $out_charset, $in_charset);
     } elseif (function_exists('iconv')) {
         $converted_value = @iconv($in_charset, $out_charset, $value);
@@ -67,26 +71,27 @@ function xlanguage_convert_item($value, $out_charset, $in_charset)
  * that should be used
  *
  * @param string  $str     string to analyze
- * @param integer $envType type of the PHP environment variable which value is $str
+ * @param int $envType type of the PHP environment variable which value is $str
  *
  * @return int|string
  */
 function xlanguage_lang_detect($str = '', $envType = 0)
 {
-    $xoops = Xoops::getInstance();
+    $xoops = \Xoops::getInstance();
     $lang = 'en';
     foreach ($xoops->registry()->get('XLANGUAGE_AVAILABLE_LANGUAGES') as $key => $value) {
         // $envType =  1 for the 'HTTP_ACCEPT_LANGUAGE' environment variable,
         //             2 for the 'HTTP_USER_AGENT' one
         $expr = $value[0];
-        if (strpos($expr, '[-_]') === false) {
+        if (false === mb_strpos($expr, '[-_]')) {
             $expr = str_replace('|', '([-_][[:alpha:]]{2,3})?|', $expr);
         }
-        if (($envType == 1 && preg_match('^(' . $expr . ')(;q=[0-9]\\.[0-9])?$^', $str)) || ($envType == 2 && preg_match('(\(|\[|;[[:space:]])(' . $expr . ')(;|\]|\))', $str))) {
+        if ((1 == $envType && preg_match('^(' . $expr . ')(;q=[0-9]\\.[0-9])?$^', $str)) || (2 == $envType && preg_match('(\(|\[|;[[:space:]])(' . $expr . ')(;|\]|\))', $str))) {
             $lang = $key;
             break;
         }
     }
+
     return $lang;
 }
 
@@ -95,7 +100,7 @@ function xlanguage_lang_detect($str = '', $envType = 0)
  */
 function xlanguage_detectLang()
 {
-    $xoops = Xoops::getInstance();
+    $xoops = \Xoops::getInstance();
 
     if (!empty($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {
         $HTTP_ACCEPT_LANGUAGE = $_SERVER['HTTP_ACCEPT_LANGUAGE'];
@@ -129,6 +134,7 @@ function xlanguage_detectLang()
         $available = $xoops->registry()->get('XLANGUAGE_AVAILABLE_LANGUAGES');
         $xoops_lang = $available[$lang][1];
     }
+
     return $xoops_lang;
 }
 
@@ -139,7 +145,7 @@ function xlanguage_detectLang()
  */
 function xlanguage_encoding($output)
 {
-    $xoops = Xoops::getInstance();
+    $xoops = \Xoops::getInstance();
     $xlanguage = $xoops->registry()->get('XLANGUAGE');
     $output = xlanguage_ml($output);
     // escape XML doc
@@ -161,23 +167,23 @@ function xlanguage_ml($s)
 {
     static $xlanguage_langs;
 
-    $xoops = Xoops::getInstance();
-    $xlanguage_handler = $xoops->registry()->get('XLANGUAGE_HANDLER');
+    $xoops = \Xoops::getInstance();
+    $xlanguageHandler = $xoops->registry()->get('XLANGUAGE_HANDLER');
 
     if (!is_object($xoops)) {
-        $xoops = Xoops::getInstance();
+        $xoops = \Xoops::getInstance();
     }
     $xoopsConfigLanguage = $xoops->getConfig('locale');
 
     if (!isset($xlanguage_langs)) {
-        $langs = $xlanguage_handler->cached_config;
+        $langs = $xlanguageHandler->cached_config;
         foreach (array_keys($langs) as $_lang) {
             $xlanguage_langs[$_lang] = $langs[$_lang]['xlanguage_code'];
         }
         unset($langs);
     }
     $xoops->registry()->set('XLANGUAGE_LANGS', $xlanguage_langs);
-    if (empty($xlanguage_langs) || count($xlanguage_langs) == 0) {
+    if (empty($xlanguage_langs) || 0 == count($xlanguage_langs)) {
         return $s;
     }
 
@@ -196,15 +202,15 @@ function xlanguage_ml($s)
     $pqhtmltags = explode(',', preg_quote($xoops->registry()->get('XLANGUAGE_TAGS_RESERVED'), '/'));
     $mid_pattern = '(?:(?!(' . implode('|', $pqhtmltags) . ')).)*';
 
-    $patterns = array();
-    $replaces = array();
-    /* */
+    $patterns = [];
+    $replaces = [];
+
     if (isset($xlanguage_langs[$xoopsConfigLanguage])) {
         $lang = $xlanguage_langs[$xoopsConfigLanguage];
         $patterns[] = '/(\[([^\]]*\|)?' . preg_quote($lang) . '(\|[^\]]*)?\])(' . $mid_pattern . ')(\[\/([^\]]*\|)?' . preg_quote($lang) . '(\|[^\]]*)?\])/isU';
         $replaces[] = '$4';
     }
-    /* */
+
     foreach (array_keys($xlanguage_langs) as $_lang) {
         if ($_lang == $xoopsConfigLanguage) {
             continue;
@@ -230,7 +236,7 @@ function xlanguage_ml($s)
  */
 function xlanguage_ml_escape_bracket($matches)
 {
-    $xoops = Xoops::getInstance();
+    $xoops = \Xoops::getInstance();
     $xlanguage_langs = $xoops->registry()->get('XLANGUAGE_LANGS');
 
     $ret = $matches[1];
@@ -238,6 +244,7 @@ function xlanguage_ml_escape_bracket($matches)
         $pattern = '/(\[([\/])?(' . implode('|', array_map('preg_quote', array_values($xlanguage_langs))) . ')([\|\]]))/isU';
         $ret = preg_replace($pattern, '&#91;\\2\\3\\4', $ret);
     }
+
     return $ret;
 }
 
@@ -248,11 +255,11 @@ function xlanguage_ml_escape_bracket($matches)
  */
 function xlanguage_select_show($options = null)
 {
-    $xoops = Xoops::getInstance();
+    $xoops = \Xoops::getInstance();
     if (!$xoops->registry()->get('XLANGUAGE_THEME_ENABLE')) {
         return false;
     }
-    include_once \XoopsBaseConfig::get('root-path') . '/modules/xlanguage/blocks/xlanguage_blocks.php';
+    require_once \XoopsBaseConfig::get('root-path') . '/modules/xlanguage/blocks/xlanguage_blocks.php';
     if (empty($options)) {
         $options[0] = 'images'; // display style: image, text, select
         $options[1] = ' '; // delimitor
@@ -262,7 +269,8 @@ function xlanguage_select_show($options = null)
     $block = b_xlanguage_select_show($options);
     $xoops->theme()->addStylesheet('modules/xlanguage/css/block.css');
     $xoops->tpl()->assign('block', $block);
-    $xlanguage_switch_code = "<div id='xo-language' class='" . $options[0] . "'>" . $xoops->tpl()->fetch('block:xlanguage/xlanguage_block.tpl') . "</div>";
+    $xlanguage_switch_code = "<div id='xo-language' class='" . $options[0] . "'>" . $xoops->tpl()->fetch('block:xlanguage/xlanguage_block.tpl') . '</div>';
     $xoops->tpl()->assign('xlanguage_switch_code', $xlanguage_switch_code);
+
     return true;
 }

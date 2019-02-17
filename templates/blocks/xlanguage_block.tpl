@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="<{xoImgUrl 'modules/xlanguage/css/block.css'}>" type="text/css" media="screen" />
+<link rel="stylesheet" href="<{xoImgUrl 'modules/xlanguage/css/block.css'}>" type="text/css" media="screen">
 
 <{if $block.display|default:false}>
 <{if $block.display == "text"}>

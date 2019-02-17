@@ -16,29 +16,28 @@
  * @author          Laurent JEN (Aka DuGris)
  * @version         $Id$
  */
-
 use Xoops\Core\Kernel\Handlers\XoopsModule;
 
 /**
- * @param XoopsModule $module
+ * @param \XoopsModule $module
  *
  * @return bool
  */
-function xoops_module_install_xlanguage(XoopsModule $module)
+function xoops_module_install_xlanguage(\XoopsModule $module)
 {
-    $xoops = Xoops::getInstance();
+    $xoops = \Xoops::getInstance();
     xlanguage_mkdirs($xoops->path(\XoopsBaseConfig::get('var-path')) . '/configs/xlanguage');
 
     return true;
 }
 
 /**
- * @param XoopsModule $module
- * @param             $version
+ * @param \XoopsModule $module
+ * @param              $version
  *
  * @return bool
  */
-function xoops_module_update_xlanguage(XoopsModule $module, $version)
+function xoops_module_update_xlanguage(\XoopsModule $module, $version)
 {
     return xoops_module_install_xlanguage($module);
 }
@@ -51,22 +50,21 @@ function xoops_module_update_xlanguage(XoopsModule $module, $version)
  */
 function xlanguage_mkdirs($pathname, $pathout = null)
 {
-    $xoops = Xoops::getInstance();
-    $pathname = substr($pathname, strlen(\XoopsBaseConfig::get('root-path')));
+    $xoops = \Xoops::getInstance();
+    $pathname = mb_substr($pathname, mb_strlen(\XoopsBaseConfig::get('root-path')));
     $pathname = str_replace(DIRECTORY_SEPARATOR, '/', $pathname);
 
-    $dest = ($pathout === null) ? \XoopsBaseConfig::get('root-path') : $pathout;
+    $dest = (null === $pathout) ? \XoopsBaseConfig::get('root-path') : $pathout;
     $paths = explode('/', $pathname);
 
     foreach ($paths as $path) {
         if (!empty($path)) {
             $dest = $dest . '/' . $path;
             if (!is_dir($dest)) {
-                if (!mkdir($dest, 0755)) {
+                if (!mkdir($dest, 0755) && !is_dir($dest)) {
                     return false;
-                } else {
-                    xlanguage_copyfile($xoops->path('uploads'), 'index.html', $dest);
                 }
+                xlanguage_copyfile($xoops->path('uploads'), 'index.html', $dest);
             }
         }
     }

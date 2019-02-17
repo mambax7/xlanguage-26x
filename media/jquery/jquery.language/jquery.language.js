@@ -37,7 +37,8 @@ $(document).ready(function() {
 });
 
 // actual function to transform select to definition list
-function createDropDown(){    var $form = $("div#country-select form");
+function createDropDown(){
+    var $form = $("div#country-select form");
     $form.hide();
     var source = $("#country-options");
     source.removeAttr("autocomplete");
@@ -46,6 +47,7 @@ function createDropDown(){    var $form = $("div#country-select form");
     $("#country-select").append('<dl id="target" class="dropdown"></dl>')
     $("#target").append('<dt class="' + selected.val() + '"><a href="#"><span class="flag"></span><em>' + selected.text() + '</em></a></dt>')
     $("#target").append('<dd><ul></ul></dd>')
-    options.each(function(){        $("#target dd ul").append('<li class="' + $(this).val() + '"><a href="' + $(this).attr("title") + '"><span class="flag"></span><em>' + $(this).text() + '</em></a></li>');
+    options.each(function(){
+        $("#target dd ul").append('<li class="' + $(this).val() + '"><a href="' + $(this).attr("title") + '"><span class="flag"></span><em>' + $(this).text() + '</em></a></li>');
     });
 }

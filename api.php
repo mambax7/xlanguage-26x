@@ -15,17 +15,16 @@
  * @author          Laurent JEN (Aka DuGris)
  * @version         $Id$
  */
-
 $xoops = \Xoops::getInstance();
-$helper = \Xoops\Module\Helper::getHelper('xlanguage');
+$helper = \XoopsModules\Xlanguage\Helper::getInstance();
 
-$xlanguage = array();
+$xlanguage = [];
 
-if (XoopsLoad::fileExists($hnd_file = \XoopsBaseConfig::get('root-path') . '/modules/xlanguage/include/vars.php')) {
-    include_once $hnd_file;
+if (\XoopsLoad::fileExists($hnd_file = \XoopsBaseConfig::get('root-path') . '/modules/xlanguage/include/vars.php')) {
+    require_once $hnd_file;
 }
-if (XoopsLoad::fileExists($hnd_file = \XoopsBaseConfig::get('root-path') . '/modules/xlanguage/include/functions.php')) {
-    include_once $hnd_file;
+if (\XoopsLoad::fileExists($hnd_file = \XoopsBaseConfig::get('root-path') . '/modules/xlanguage/include/functions.php')) {
+    require_once $hnd_file;
 }
 
 $cookie_var = $xoops->registry()->get('XLANGUAGE_LANG_TAG');
@@ -43,9 +42,9 @@ if (!empty($_GET[$xoops->registry()->get('XLANGUAGE_LANG_TAG')])) {
     $xlanguage['lang'] = $helper->getConfig('language');
 }
 
-$helper->getHandlerLanguage()->loadConfig();
+$helper->getHandler('Language')->loadConfig();
 
-$lang = $helper->getHandlerLanguage()->getByName($xlanguage['lang']);
+$lang = $helper->getHandler('Language')->getByName($xlanguage['lang']);
 
 if (is_array($lang) && strcasecmp($lang['xlanguage_name'], $helper->getConfig('language'))) {
     $xoops->setConfig('locale', $lang['xlanguage_name']);
@@ -58,7 +57,7 @@ if (is_array($lang) && strcasecmp($lang['xlanguage_name'], $helper->getConfig('l
 }
 unset($lang);
 
-$xoops->registry()->set('XLANGUAGE_HANDLER', $helper->getHandlerLanguage());
+$xoops->registry()->set('XLANGUAGE_HANDLER', $helper->getHandler('Language'));
 
 if ($xlanguage['action']) {
     //if(CONV_REQUEST && (!empty($_GET)||!empty($_POST))){
@@ -67,7 +66,7 @@ if ($xlanguage['action']) {
         $out_charset = $xlanguage['charset_base'];
 
         //$CONV_REQUEST_array=array('_GET', '_POST');
-        $CONV_REQUEST_array = array('_POST');
+        $CONV_REQUEST_array = ['_POST'];
         foreach ($CONV_REQUEST_array as $HV) {
             if (!empty(${$HV})) {
                 ${$HV} = xlanguage_convert_encoding(${$HV}, $out_charset, $in_charset);

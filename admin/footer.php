@@ -16,5 +16,4 @@
  * @author          Laurent JEN (Aka DuGris)
  * @version         $Id$
  */
-
 $xoops->footer();
