@@ -14,7 +14,6 @@
  * @package         xlanguage
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
-
  */
 define('_XLANGUAGE_TINYMCE_INS', 'Insert multi-language content');
 define('_XLANGUAGE_TINYMCE_ADD', 'Add language');

@@ -14,7 +14,6 @@
  * @package         xlanguage
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
-
  */
 define('_MI_XLANGUAGE_NAME', 'Xlanguage');
 define('_MI_XLANGUAGE_DESC', 'Xoops multi-Language Management');

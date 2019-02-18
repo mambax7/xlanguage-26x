@@ -13,7 +13,6 @@
  * @package         xlanguage
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
-
  */
 $xoops = \Xoops::getInstance();
 $xoops->registry()->set('XLANGUAGE_CONFIG_FILE', 'xlanguage.config');

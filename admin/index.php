@@ -13,9 +13,7 @@
  * @package         xlanguage
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
-
  */
-
 use XoopsModules\Xlanguage\Form;
 
 include __DIR__ . '/header.php';
@@ -53,7 +51,7 @@ switch ($op) {
             if ($lang = $helper->getHandler('Language')->get($xlanguage_id)) {
                 $form = $helper->getForm($lang, 'language');
                 $form->display();
-                //$admin_page->addInfoBox(_MI_XLANGUAGE_MODIFY);
+            //$admin_page->addInfoBox(_MI_XLANGUAGE_MODIFY);
                 //$admin_page->addInfoBoxLine($form->render());
             } else {
                 $xoops->redirect('index.php', 2);
@@ -76,9 +74,9 @@ switch ($op) {
                     $xoops->redirect('index.php', 2, _AM_XLANGUAGE_DELETED);
                 } else {
                     $confirm = $xoops->confirm([
-                                                   'ok'           => 1,
+                                                   'ok' => 1,
                                                    'xlanguage_id' => $xlanguage_id,
-                                                   'op'           => 'del',
+                                                   'op' => 'del',
                                                ], $_SERVER['REQUEST_URI'], sprintf(_AM_XLANGUAGE_DELETE_CFM . "<br><b><span style='color : #ff0000'> %s </span></b><br><br>", $lang->getVar('xlanguage_name')));
                     $confirm = '<div class="confirm">' . $confirm . '</div>';
                     $admin_page->addInfoBox(_MI_XLANGUAGE_DELETE);

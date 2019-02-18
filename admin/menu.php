@@ -14,7 +14,6 @@
  * @package         xlanguage
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
-
  */
 $cpt = 0;
 $adminmenu[$cpt]['title'] = _MI_XLANGUAGE_INDEX;

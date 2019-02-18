@@ -14,9 +14,7 @@
  * @package         Xlanguage
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
-
  */
-use Xoops\Core\Kernel\Handlers\XoopsModule;
 
 /**
  * @param \XoopsModule $module

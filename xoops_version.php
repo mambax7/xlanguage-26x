@@ -14,11 +14,10 @@
  * @package         xlanguage
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
-
  */
-$modversion['version']       = 4.00;
+$modversion['version'] = 4.00;
 $modversion['module_status'] = 'Alpha 1';
-$modversion['release_date']  = '2012/10/01';
+$modversion['release_date'] = '2012/10/01';
 $modversion['name'] = _MI_XLANGUAGE_NAME;
 $modversion['description'] = _MI_XLANGUAGE_DESC;
 $modversion['author'] = 'Xoops Core Development Team';

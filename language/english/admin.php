@@ -14,7 +14,6 @@
  * @package         xlanguage
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
-
  */
 define('_AM_XLANGUAGE_ACTION', 'Action');
 

@@ -20,7 +20,6 @@ namespace XoopsModules\Xlanguage;
  * @package         xlanguage
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
-
  */
 require_once \XoopsBaseConfig::get('root-path') . '/modules/xlanguage/include/vars.php';
 
