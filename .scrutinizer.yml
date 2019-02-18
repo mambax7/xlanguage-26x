@@ -7,8 +7,7 @@ build:
         after:
           # The following installs the most recent XOOPS CMS version, you might want
           # to install a specific release tag or branch instead.
-          - git clone --depth=1 https://github.com/XOOPS/XoopsCore25
-          - git clone --depth=1 https://github.com/mambax7/tag
+          - git clone --depth=1 https://github.com/XOOPS/XoopsCore
       project_setup:
         override: true
       tests:
@@ -16,6 +15,5 @@ build:
           - php-scrutinizer-run --enable-security-analysis
 filter:
   dependency_paths:
-    - XoopsCore25/*
-    - tag/*
+    - XoopsCore/*
 
