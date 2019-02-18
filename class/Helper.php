@@ -18,9 +18,8 @@ namespace XoopsModules\Xlanguage;
  * @package         xlanguage
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
-
  */
-class Helper extends \Xoops\Module\Helper\HelperAbstract
+class helper extends \Xoops\Module\Helper\HelperAbstract
 {
     /**
      * Init the module
