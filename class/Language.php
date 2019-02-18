@@ -15,12 +15,12 @@ namespace XoopsModules\Xlanguage;
 /**
  * Language
  *
- * @copyright       2010-2014 XOOPS Project (http://xoops.org)
+ * @copyright       2010-2014 XOOPS Project (https://xoops.org)
  * @license         GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
  * @package         xlanguage
  * @since           2.6.0
  * @author          Laurent JEN (Aka DuGris)
- * @version         $Id$
+
  */
 require_once \XoopsBaseConfig::get('root-path') . '/modules/xlanguage/include/vars.php';
 
